@@ -18,29 +18,29 @@ class RouteCalculatorController extends Controller
             'latEnd' => 'required|numeric',
             'longEnd' => 'required|numeric',
         ]);
-    
+
         $mode = $request->input('mode');
         $latStart = $request->input('latStart');
         $longStart = $request->input('longStart');
         $latEnd = $request->input('latEnd');
         $longEnd = $request->input('longEnd');
-    
-        
-        $base_url = "base_url";  
-    
-        
+
+
+        $base_url = "http://localhost:5000/";
+
+
         $route_service_url = "{$base_url}/route/v1/{$mode}/{$longStart},{$latStart};{$longEnd},{$latEnd}?overview=full&steps=true&geometries=geojson";
-    
-        
+
+
         $response = Http::get($route_service_url);
-    
-        
+
+
         if ($response->successful()) {
             return response()->json($response->json());
         }
-    
-        
+
+
         return response()->json(['error' => 'Não foi possível obter a rota'], 500);
     }
-    
+
 }
